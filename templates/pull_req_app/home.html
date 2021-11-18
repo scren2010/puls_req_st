@@ -1,0 +1,76 @@
+{% block content %}
+    <style>
+        table.iksweb {
+            text-decoration: none;
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center;
+        }
+
+        table.iksweb th {
+            font-weight: normal;
+            font-size: 14px;
+            color: #ffffff;
+            background-color: #354251;
+        }
+
+        table.iksweb td {
+            font-size: 13px;
+            color: #354251;
+        }
+
+        table.iksweb td, table.iksweb th {
+            white-space: pre-wrap;
+            padding: 10px 5px;
+            line-height: 13px;
+            vertical-align: middle;
+            border: 1px solid #354251;
+        }
+
+        table.iksweb tr:hover {
+            background-color: #f9fafb
+        }
+
+        table.iksweb tr:hover td {
+            color: #354251;
+            cursor: default;
+        }
+    </style>
+
+    <form action="" method="post">
+
+        {% csrf_token %}
+
+        <input type="text" name="git_pull" id="">
+        <button type="submit">Отправить</button>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+    </form>
+
+    <table class="iksweb">
+        <thead>
+        <tr>
+            <th>Pull Request</th>
+            <th>Pull Request Reviewers (usernames)</th>
+            <th>Pull Request Assignees (usernames)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for foo in user_result %}
+            <tr>
+                <td><a href="{{ foo.pull_request_link }}">{{ foo.pull_request }}</a></td>
+                <td>{{ foo.pull_request_reviewers }}</td>
+                <td>{{ foo.pull_request_assignees }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
